@@ -3,10 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:PrzelicznikMVVM.ViewModel"
         xmlns:local="clr-namespace:PrzelicznikMVVM"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:PrzelicznikMainWindowViewModel></vm:PrzelicznikMainWindowViewModel>
+    </Window.DataContext>
     <StackPanel>
-        <TextBlock FontSize="36" Text="Przelicznik"/>
+        <TextBlock FontSize="36" Text="Przelicznik" HorizontalAlignment="Center"/>
+        <WrapPanel HorizontalAlignment="Center">
+            <TextBlock Text="Jednostka Z:" FontSize="20" Margin="10"/>
+            <ComboBox SelectedItem="{Binding SelectedUnitFrom}" ItemsSource="{Binding UnitsFrom}" Width="400" Margin="10"/>
+        </WrapPanel>
+        <WrapPanel HorizontalAlignment="Center">
+            <TextBlock Text="Jednostka Do:" FontSize="20" Margin="10"/>
+            <ComboBox SelectedItem="{Binding SelectedUnitTo}" ItemsSource="{Binding UnitsTo}" Width="400" Margin="10"/>
+        </WrapPanel>
+        <Button Content="Oblicz" Margin="20" Width="400" Padding="10" Command="{Binding CalculateCommand}"/>
+        <WrapPanel HorizontalAlignment="Center" >
+            <TextBlock FontSize="20" Text="Wynik:"/>
+            <TextBlock FontSize="20" Text="{Binding Result}"/>
+        </WrapPanel>
     </StackPanel>
 </Window>

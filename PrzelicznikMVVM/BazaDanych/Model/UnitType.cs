@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PrzelicznikMVVM.BazaDanych.Model
 {
-    class UnitMethod
+    class UnitType
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Nazwa { get; set; }
     }
 }
