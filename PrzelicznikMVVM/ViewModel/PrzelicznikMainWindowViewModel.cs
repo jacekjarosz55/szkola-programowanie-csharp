@@ -26,7 +26,15 @@ namespace PrzelicznikMVVM.ViewModel
             dbContext = new ConverterDbContext();
             _unitTypes = dbContext.UnitTypes.ToList();
 
+
         }
+        private List<UnitType> _unitTypes;
+        public List<UnitType> UnitTypes => _unitTypes;
+
+        private List<Unit> _units;
+        public List<Unit> UnitsTo => _units;
+        public List<Unit> UnitsFrom =>  _units.Where
+
 
 
 
@@ -37,11 +45,6 @@ namespace PrzelicznikMVVM.ViewModel
                 _selectedUnitFrom = value; OnPropertyChanged();
             }
         }
-
-        private List<UnitType> _unitTypes;
-        public List<UnitType> UnitTypes => _unitTypes;
-      
-
 
 
         private Unit _selectedUnitTo;

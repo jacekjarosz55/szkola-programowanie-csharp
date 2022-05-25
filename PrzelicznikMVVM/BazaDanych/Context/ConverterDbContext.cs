@@ -12,7 +12,7 @@ namespace PrzelicznikMVVM.BazaDanych.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder ob)
         {
-            base.OnConfiguring(ob.UseSqlite(@"Data Source=Converter.db"));
+            base.OnConfiguring(ob.UseSqlite(@"Filename=Converter.db"));
         }
     }
 } 
