@@ -4,29 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:PrzelicznikMVVM.ViewModel"
-        xmlns:local="clr-namespace:PrzelicznikMVVM"
+        xmlns:conv="clr-namespace:PrzelicznikMVVM.ViewModel.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="800">
     <Window.DataContext>
         <vm:PrzelicznikMainWindowViewModel></vm:PrzelicznikMainWindowViewModel>
     </Window.DataContext>
+
+    <Window.Resources>
+        <conv:StringToNumberConverter x:Key="StrIntConverter"></conv:StringToNumberConverter>
+    </Window.Resources>
+    
     <StackPanel Margin="40">
         <TextBlock FontSize="36" Text="Przelicznik" HorizontalAlignment="Center"/>
-            <TextBlock Text="Rodzaj:" FontSize="20"/>
-            <ComboBox SelectedItem="{Binding SelectedUnitType}" ItemsSource="{Binding UnitTypes}" >
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <TextBlock Text="Jednostka Z:" FontSize="20"/>
-            <ComboBox SelectedItem="{Binding SelectedUnitFrom}" ItemsSource="{Binding UnitsFrom}" />
-            <TextBlock Text="Jednostka Do:" FontSize="20"/>
-            <ComboBox SelectedItem="{Binding SelectedUnitTo}" ItemsSource="{Binding UnitsTo}" />
+        <TextBlock Text="Rodzaj:" FontSize="20"/>
+        <ComboBox SelectedItem="{Binding SelectedUnitType}" ItemsSource="{Binding UnitTypes}" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Text="Jednostka Z:" FontSize="20"/>
+        <ComboBox SelectedItem="{Binding SelectedUnitFrom}" ItemsSource="{Binding Units}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Text="Jednostka Do:" FontSize="20"/>
+        <ComboBox SelectedItem="{Binding SelectedUnitTo}" ItemsSource="{Binding Units}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
-        <TextBox Text="{Binding InputNum}" Margin="20" Padding="10"/>
-        <Button Content="Oblicz" Margin="20" Padding="10" Command="{Binding CalculateCommand}"/>
+        <TextBox Text="{Binding InputValue,Converter={StaticResource StrIntConverter},UpdateSourceTrigger=PropertyChanged}" Margin="20" Padding="10"/>
+        <Button Content="Oblicz" Margin="20" Padding="10" Command="{Binding CalculateCommand}" IsEnabled="{Binding CanCalculate}"/>
 
         <WrapPanel HorizontalAlignment="Center" >
             <TextBlock FontSize="20" Text="Wynik:"/>

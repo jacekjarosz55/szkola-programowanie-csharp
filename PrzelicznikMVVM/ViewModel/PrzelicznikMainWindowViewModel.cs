@@ -1,53 +1,72 @@
-﻿using System;
+﻿using PrzelicznikMVVM.BazaDanych.Context;
+using PrzelicznikMVVM.BazaDanych.Model;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-
-using PrzelicznikMVVM.BazaDanych.Model;
-using PrzelicznikMVVM.BazaDanych.Context;
-
-using WPFUtilities;
-using System.Linq;
 using System.Windows.Input;
+using WPFUtilities;
 
 namespace PrzelicznikMVVM.ViewModel
 {
     class PrzelicznikMainWindowViewModel : ObserverVM
     {
-        private ConverterDbContext dbContext;
-        
+
 
         public PrzelicznikMainWindowViewModel()
         {
             dbContext = new ConverterDbContext();
-            _unitTypes = dbContext.UnitTypes.ToList();
+            UnitTypes = dbContext.UnitTypes.ToList();
             
         }
 
-        #region lists
-        private List<UnitType> _unitTypes;
-        public List<UnitType> UnitTypes => _unitTypes;
 
-        private List<Unit> _units;
+        private int? _inputValue;
 
-        public List<Unit> UnitsFrom => _units;
-        public List<Unit> UnitsTo => _units.Where(x => x.Id != SelectedUnitFrom.Id).ToList();
-
-        #endregion
-
-        #region selected units
-        private Unit _selectedUnitFrom;
-        public Unit SelectedUnitFrom {
-            get => _selectedUnitFrom;
-            set {
-                _selectedUnitFrom = value;
+        public int? InputValue
+        {
+            get => _inputValue;
+            set
+            {
+                _inputValue = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(UnitsTo));
+            } 
+        }
+
+
+
+
+
+
+        private List<UnitType> _unitTypes;
+
+        public List<UnitType> UnitTypes
+        {
+            get => _unitTypes;
+            set
+            {
+                _unitTypes = value;
+                OnPropertyChanged();
             }
         }
+
+
+        private UnitType _selectedUnitType;
+        public UnitType SelectedUnitType
+        {
+            get => _selectedUnitType;
+            set
+            {
+                _selectedUnitType = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Units));
+            }
+        }
+        private List<Unit> _units;
+        public List<Unit> Units
+        {
+            get { return  }
+            set { _units = value; OnPropertyChanged(); }
+        }
+
 
 
         private Unit _selectedUnitTo;
@@ -56,11 +75,26 @@ namespace PrzelicznikMVVM.ViewModel
             get => _selectedUnitTo;
             set
             {
-                _selectedUnitTo = value; OnPropertyChanged();
+                _selectedUnitTo = value;
+                OnPropertyChanged();
             }
         }
 
-        #endregion
+
+        private Unit _selectedUnitFrom;
+        public Unit SelectedUnitFrom
+        {
+            get => _selectedUnitFrom;
+            set
+            {
+                _selectedUnitFrom = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+
 
 
         private ICommand _calculateCommand;
@@ -68,13 +102,14 @@ namespace PrzelicznikMVVM.ViewModel
         {
             get
             {
-                if(_calculateCommand == null)
+                if (_calculateCommand == null)
                 {
-                    _calculateCommand = new RelayCommand<object>(OnCalculateCommand);
+                    _calculateCommand = new RelayCommand<object>(OnCalculateCommand, CanCalculateExecute);
                 }
                 return _calculateCommand;
-            } 
-            set {
+            }
+            set
+            {
                 _calculateCommand = value;
                 OnPropertyChanged();
             }
@@ -82,22 +117,16 @@ namespace PrzelicznikMVVM.ViewModel
 
         public double Result { get; set; }
 
-        private Converter AvaliableConverter
-        {
-            get => dbContext.Converters.Where(
-                converter =>
-                    converter.UnitFrom == SelectedUnitFrom 
-                    && converter.UnitTo == SelectedUnitTo
-                ).First();
-        }
 
-        public bool CanCalculateExecute(object ob) => AvaliableConverter != null;
-        
+
+        public bool CanCalculateExecute(object ob) => _inputValue != null;
+            //dbContext.Converters.Where(conv => conv.UnitFrom == _selectedUnitFrom && conv.UnitTo == _selectedUnitTo).Any();
+
         public void OnCalculateCommand(object ob)
         {
-            if (AvaliableConverter == null) return;
+            return;
 
-            
+
         }
     }
 }
