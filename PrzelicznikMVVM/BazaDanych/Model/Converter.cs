@@ -16,8 +16,6 @@ namespace PrzelicznikMVVM.BazaDanych.Model
         public int UnitToId { get; set; }
         public Unit UnitTo { get; set; }
 
-        
-
-        public double Value;
+        public double Value { get; set; }
     }
 }

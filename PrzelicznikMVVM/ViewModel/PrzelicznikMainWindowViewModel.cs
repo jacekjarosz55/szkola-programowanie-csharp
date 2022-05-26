@@ -19,13 +19,12 @@ namespace PrzelicznikMVVM.ViewModel
     {
         private ConverterDbContext dbContext;
         
-        
-        
 
         public PrzelicznikMainWindowViewModel()
         {
             dbContext = new ConverterDbContext();
             _unitTypes = dbContext.UnitTypes.ToList();
+            
         }
 
         #region lists
