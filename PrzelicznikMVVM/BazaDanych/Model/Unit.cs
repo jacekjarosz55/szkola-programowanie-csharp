@@ -22,5 +22,7 @@ namespace PrzelicznikMVVM.BazaDanych.Model
             CharRepresentation = charRepresentation;
             Type = type;
         }
+        public Unit() { }
+
     }
 }

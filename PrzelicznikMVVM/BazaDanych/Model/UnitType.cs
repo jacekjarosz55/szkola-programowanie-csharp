@@ -15,5 +15,7 @@ namespace PrzelicznikMVVM.BazaDanych.Model
         {
             Name = name;
         }
+
+        public UnitType() { }
     }
 }

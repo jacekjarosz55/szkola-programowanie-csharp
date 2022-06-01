@@ -24,5 +24,7 @@ namespace PrzelicznikMVVM.BazaDanych.Model
             UnitTo = unitTo;
             Value = value;
         }
+
+        public Converter() { }
     }
 }
