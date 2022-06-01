@@ -15,5 +15,13 @@ namespace PrzelicznikMVVM.BazaDanych.Model
            
         public int TypeId { get; set; } 
         public UnitType Type { get; set; }
+
+        public Unit(string name, string charRepresentation, int typeId, UnitType type)
+        {
+            Name = name;
+            CharRepresentation = charRepresentation;
+            TypeId = typeId;
+            Type = type;
+        }
     }
 }
