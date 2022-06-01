@@ -40,6 +40,14 @@ namespace PrzelicznikMVVM.BazaDanych.Repository
             return _context.Units.Where(unit => unit.Type == type).ToList();
         }
 
+        public List<UnitType> GetAllTypes()
+        {
+            return _context.UnitTypes.ToList();
+        }
 
+        internal List<Unit> GetUnitsConvertibleFrom(Unit selectedFrom)
+        {
+            return _context.Converters.Join(_context.Units, x => x.UnitFromId, y => y.Id, (x, y) => y).ToList();
+        }
     }
 }

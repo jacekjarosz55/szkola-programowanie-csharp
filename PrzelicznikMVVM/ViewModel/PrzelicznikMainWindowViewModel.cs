@@ -11,18 +11,23 @@ namespace PrzelicznikMVVM.ViewModel
     class PrzelicznikMainWindowViewModel : ObserverVM
     {
 
-
         ConverterRepository repo = ConverterRepository.Instance;
 
-        private int _inputValue;
+        #region private property fields
+        private int? _inputValue;
         private double _result;
         private Unit _selectedTo;
         private Unit _selectedFrom;
         private UnitType _selectedType;
         private ICommand _calculateCommand;
 
+        private List<Unit> _availableFrom;
+        private List<Unit> _availableTo;
+        private List<UnitType> _avaliableTypes;
+        #endregion
 
-        public int InputValue
+        #region properties exposed to view
+        public int? InputValue
         {
             get => _inputValue;
             set
@@ -42,6 +47,8 @@ namespace PrzelicznikMVVM.ViewModel
             }
         }
 
+        #region selected items
+
         public Unit SelectedTo
         {
             get => _selectedTo;
@@ -59,6 +66,7 @@ namespace PrzelicznikMVVM.ViewModel
             {
                 _selectedFrom = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(AvailableTo));
             }
         }
 
@@ -69,9 +77,18 @@ namespace PrzelicznikMVVM.ViewModel
             {
                 _selectedType = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(SelectedFrom));
             }
         }
+        #endregion
 
+        #region lists
+        public List<UnitType> AvaliableTypes => repo.GetAllTypes();
+        public List<Unit> AvailableFrom => repo.GetUnitsByType(_selectedType);
+        public List<Unit> AvailableTo => repo.GetUnitsConvertibleFrom(_selectedFrom);
+        #endregion
+
+        #region commands
 
 
         public ICommand CalculateCommand
@@ -90,16 +107,20 @@ namespace PrzelicznikMVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+        #endregion
 
+        #endregion
 
+        #region command methods
 
-        public bool CanCalculateExecute(object ob) => _inputValue != null;
+        public bool CanCalculateExecute(object ob) => _inputValue.HasValue && AvailableTo.Count > 0;
         
         public void OnCalculateCommand(object ob)
         {
+            Converter current = repo.GetConverterByUnits(_selectedFrom, _selectedTo);
+            _result = _inputValue.Value * current.Value;
             return;
-
-
         }
+        #endregion
     }
 }
