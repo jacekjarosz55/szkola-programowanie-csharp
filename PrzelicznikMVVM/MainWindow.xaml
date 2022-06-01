@@ -18,7 +18,7 @@
     <StackPanel Margin="40">
         <TextBlock FontSize="36" Text="Przelicznik" HorizontalAlignment="Center"/>
         <TextBlock Text="Rodzaj:" FontSize="20"/>
-        <ComboBox SelectedItem="{Binding SelectedUnitType}" ItemsSource="{Binding UnitTypes}" >
+        <ComboBox SelectedItem="{Binding SelectedType}" ItemsSource="{Binding AvaliableTypes}" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -26,7 +26,7 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock Text="Jednostka Z:" FontSize="20"/>
-        <ComboBox SelectedItem="{Binding SelectedUnitFrom}" ItemsSource="{Binding Units}">
+        <ComboBox SelectedItem="{Binding SelectedFrom}" ItemsSource="{Binding AvailableFrom}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"></TextBlock>
@@ -34,7 +34,7 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock Text="Jednostka Do:" FontSize="20"/>
-        <ComboBox SelectedItem="{Binding SelectedUnitTo}" ItemsSource="{Binding Units}">
+        <ComboBox SelectedItem="{Binding SelectedTo}" ItemsSource="{Binding AvailableTo}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"></TextBlock>
@@ -43,7 +43,7 @@
         </ComboBox>
 
         <TextBox Text="{Binding InputValue,Converter={StaticResource StrIntConverter},UpdateSourceTrigger=PropertyChanged}" Margin="20" Padding="10"/>
-        <Button Content="Oblicz" Margin="20" Padding="10" Command="{Binding CalculateCommand}" IsEnabled="{Binding CanCalculate}"/>
+        <Button Content="Oblicz" Margin="20" Padding="10" Command="{Binding CalculateCommand}"/>
 
         <WrapPanel HorizontalAlignment="Center" >
             <TextBlock FontSize="20" Text="Wynik:"/>

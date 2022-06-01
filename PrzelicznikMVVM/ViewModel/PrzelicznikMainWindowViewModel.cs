@@ -13,8 +13,18 @@ namespace PrzelicznikMVVM.ViewModel
 
         ConverterRepository repo = ConverterRepository.Instance;
 
+
+        public PrzelicznikMainWindowViewModel()
+        {
+            //AvailableTo = new List<Unit>();
+            //AvailableFrom = new List<Unit>();
+            AvailableTypes = repo.GetAllTypes();
+      
+            
+        }
+
         #region private property fields
-        private int? _inputValue;
+        private double? _inputValue;
         private double _result;
         private Unit _selectedTo;
         private Unit _selectedFrom;
@@ -27,7 +37,7 @@ namespace PrzelicznikMVVM.ViewModel
         #endregion
 
         #region properties exposed to view
-        public int? InputValue
+        public double? InputValue
         {
             get => _inputValue;
             set
@@ -65,8 +75,8 @@ namespace PrzelicznikMVVM.ViewModel
             set
             {
                 _selectedFrom = value;
+                AvailableTo = repo.GetUnitsConvertibleFrom(_selectedFrom);
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(AvailableTo));
             }
         }
 
@@ -77,15 +87,42 @@ namespace PrzelicznikMVVM.ViewModel
             {
                 _selectedType = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SelectedFrom));
+                AvailableFrom = repo.GetUnitsByType(_selectedType);
             }
         }
         #endregion
 
         #region lists
-        public List<UnitType> AvaliableTypes => repo.GetAllTypes();
-        public List<Unit> AvailableFrom => repo.GetUnitsByType(_selectedType);
-        public List<Unit> AvailableTo => repo.GetUnitsConvertibleFrom(_selectedFrom);
+        
+        public List<UnitType> AvailableTypes
+        {
+            get => _avaliableTypes;
+            set
+            {
+                _avaliableTypes = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public List<Unit> AvailableFrom {
+            get => _availableFrom;
+            set
+            {
+                _availableFrom = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<Unit> AvailableTo
+        {
+            get => _availableTo;
+            set
+            {
+                _availableTo = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region commands
@@ -118,7 +155,7 @@ namespace PrzelicznikMVVM.ViewModel
         public void OnCalculateCommand(object ob)
         {
             Converter current = repo.GetConverterByUnits(_selectedFrom, _selectedTo);
-            _result = _inputValue.Value * current.Value;
+            Result = _inputValue.Value * current.Value;
             return;
         }
         #endregion

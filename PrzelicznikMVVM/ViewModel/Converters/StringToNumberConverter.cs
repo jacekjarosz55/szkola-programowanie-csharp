@@ -9,21 +9,25 @@ namespace PrzelicznikMVVM.ViewModel.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int intval)
+          
+
+
+            if (value is double doubleVal)
             {
-                return intval.ToString();
+                return doubleVal.ToString();
             }
+
 
             return Binding.DoNothing;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int returnVal;
+            double returnVal;
 
             if (value is string strval)
             {
-                if (int.TryParse(strval, out returnVal)) return returnVal;
+                if (double.TryParse(strval, out returnVal)) return returnVal;
                 else return null;
             }
 
