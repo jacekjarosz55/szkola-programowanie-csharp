@@ -27,6 +27,9 @@ namespace PrzelicznikMVVM.BazaDanych.Migrations
                     b.Property<int>("UnitToId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<double>("Value")
+                        .HasColumnType("REAL");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UnitFromId");
