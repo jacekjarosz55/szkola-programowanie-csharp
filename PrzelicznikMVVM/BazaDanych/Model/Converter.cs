@@ -18,11 +18,9 @@ namespace PrzelicznikMVVM.BazaDanych.Model
 
         public double Value { get; set; }
 
-        public Converter(int unitFromId, Unit unitFrom, int unitToId, Unit unitTo, double value)
+        public Converter(Unit unitFrom, Unit unitTo, double value)
         {
-            UnitFromId = unitFromId;
             UnitFrom = unitFrom;
-            UnitToId = unitToId;
             UnitTo = unitTo;
             Value = value;
         }
