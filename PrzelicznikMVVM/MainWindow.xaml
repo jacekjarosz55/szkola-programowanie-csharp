@@ -18,7 +18,7 @@
     <StackPanel Margin="40">
         <TextBlock FontSize="36" Text="Przelicznik" HorizontalAlignment="Center"/>
         <TextBlock Text="Rodzaj:" FontSize="20"/>
-        <ComboBox SelectedItem="{Binding SelectedType}" ItemsSource="{Binding AvaliableTypes}" >
+        <ComboBox SelectedItem="{Binding SelectedType}" ItemsSource="{Binding AvailableTypes}" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>

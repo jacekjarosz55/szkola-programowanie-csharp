@@ -10,7 +10,7 @@ namespace PrzelicznikMVVM.BazaDanych.Repository
     class ConverterRepository
     {
         #region singleton instance
-        private ConverterRepository() {  }
+        private ConverterRepository() {   }
 
         static private ConverterRepository _instance;
         static public ConverterRepository Instance
